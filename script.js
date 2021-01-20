@@ -7,5 +7,5 @@ function changeColor() {
 }
 
 
-button.addEventListener("click",changeColor);
+button.addEventListener("click", changeColor);
 
