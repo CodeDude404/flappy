@@ -1,5 +1,5 @@
 const header1 = document.getElementsByTagName("h1")[2];
-const button = document.createElementById("btn");
+const button = document.getElementById("btn");
 
 
 function changeColor() {
