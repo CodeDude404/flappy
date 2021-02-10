@@ -18,7 +18,7 @@ document.onload = function () {
 		SCORE = 0; //make the score 0
 		PLAYER = {
 			x: CANVAS.width / 4, //Set the player x corrodnate to the canvas width 	divided by 4
-			y: GROUND_LEVEL - PLAYER_SIZE, //Set the player y corrodnate of the 	ground minus the size of the player so that the player is not in the 	ground
+			y: GROUND_LEVEL - PLAYER_SIZE, //Set the player y corrodnate of the	ground minus the size of the player so that the player is not in the 	ground
 			y_velocity: 0 //Set the up and down speed to 0
 		};
 	}
@@ -57,6 +57,14 @@ document.onload = function () {
 	}
 
 
+	function drawPlayer() {
+		CTX.beginPath();
+		CTX.rect(PLAYER.x, PLAYER.y, PLAYER_SIZE, PLAYER_SIZE);
+		CTX.fillStyle = "orange";
+		CTX.fill();
+	}
+
+
 	//Run the game
 
 	//start a new game
@@ -65,4 +73,4 @@ document.onload = function () {
 	//set the interval to update the frame
 	setInterval(frameUpdate, 10);
 
-}
+} 
