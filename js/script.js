@@ -12,6 +12,7 @@ var PLAYER;
 var GameOVER;
 
 
+
 //Game Functions
 //Initlaizer function
 function setUpNewGame() {
@@ -25,6 +26,11 @@ function setUpNewGame() {
 
 //make a function to update the frame
 function frameUpdate() {
+	if (GameOVER === false) {
+		updateGameState();
+	} else {
+		
+	}
 	drawGame();
 }
 
@@ -64,6 +70,38 @@ function drawPlayer() {
 	CTX.fill();
 }
 
+function updateGameState() {
+	PLAYER.y += PLAYER.y_velocity;
+	if (PLAYER.y >= grounLevel - PLAYER_SIZE) {
+		PLAYER.y = GROUND_LEVEL - PLAYER_SIZE;
+		PLAYER.y_velocity = 0;
+	} else if (PLAYER.y <= 0){
+		PLAYER.y_velocity = 0.1;
+		PLAYER.y = 0;
+	} else {
+		PLAYER.y_velocity += 0.1;
+	}
+}
+function onKeyPressed(event) {
+	if (event.keyCode === 32) {
+		console.log("Space key pressed.");
+
+		 if (GameOVER) {
+			setUpNewGame();
+			GameOVER = false;
+
+		 } else {
+			 PLAYER.y_velocity = -4;
+		 }
+
+	} else {
+		console.log("Space key not pressed.");
+	}
+}
+
+
+//event listener
+document.addEventListener("keyDown", onKeyPressed);
 
 //Run the game
 
