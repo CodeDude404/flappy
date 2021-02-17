@@ -1,4 +1,3 @@
-
 //Initalize
 var PLAYER_SIZE = 20;
 var CANVAS = document.getElementById("myCanvas");
