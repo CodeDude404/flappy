@@ -9,12 +9,20 @@ var OBSTICILES;
 var SCROLL_SPEED;
 var PLAYER;
 var GameOVER;
+var OBSTICILE_COOLDOWN_TIME = 40;
+var OBSTICILE_SPAWNER = OBSTICILE_COOLDOWN_TIME; 
 
 
 
 //Game Functions
 //Initlaizer function
 function setUpNewGame() {
+	OBSTICILES = [];
+	SCROLL_SPEED = 2;
+	SCORE = 0;
+	SCORE_TEXT.textContent = "Score: " + SCORE;
+
+	GameOVER = true;
 	SCORE = 0; //make the score 0
 	PLAYER = {
 		x: CANVAS.width / 4, //Set the player x corrodnate to the canvas width 	divided by 4
@@ -81,6 +89,16 @@ function updateGameState() {
 		PLAYER.y_velocity += 0.1;
 	}
 }
+
+function spawnObs() {
+	var obs = {
+		x: CANVAS.width,
+		y: Math.random() * grounLevel,
+		height: Math.random() * 100 + PLAYER_SIZE
+	};
+	OBSTICILES.push(obs);
+}
+
 function onKeyPressed(event) {
 	if (event.keyCode === 32) {
 		console.log("Space key pressed.");
@@ -97,6 +115,7 @@ function onKeyPressed(event) {
 		console.log("Space key not pressed.");
 	}
 }
+
 
 
 //event listener
