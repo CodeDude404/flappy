@@ -11,6 +11,7 @@ var PLAYER;
 var GameOVER;
 var OBSTICILE_COOLDOWN_TIME = 40;
 var OBSTICILE_SPAWNER = OBSTICILE_COOLDOWN_TIME;
+var obs = [];
 
 //Game Functions
 //Initlaizer function
@@ -81,7 +82,6 @@ function spawnObs() {
 		height: Math.random() * 100 + PLAYER_SIZE
 	};
 
-	;
 	OBSTICILES.push(obs);
 }
 function updateGameState() {
