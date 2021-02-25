@@ -151,7 +151,7 @@ function DRAW_OBSTICLES() {
 
 //event listener
 document.addEventListener("keydown", function (event) {
-	if (event.code == "space") {
+	if (event.code == "Space") {
 		console.log("Space key pressed.");
 
 		if (GameOVER) {
