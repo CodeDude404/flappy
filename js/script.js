@@ -1,3 +1,7 @@
+function log(messsage) {
+	console.log(messsage)
+}
+
 //Initalize
 var PLAYER_SIZE = 20;
 var CANVAS = document.getElementById("myCanvas");
@@ -77,12 +81,14 @@ function drawPlayer() {
 
 function spawnObs() {
 	var obs = {
-		x: CANVAS.width,
+		x: CANVAS.width, //CANVAS.width
 		y: Math.random() * GROUND_LEVEL,
 		height: Math.random() * 100 + PLAYER_SIZE
 	};
 
+
 	OBSTICILES.push(obs);
+	log(OBSTICILES)
 }
 function updateGameState() {
 	PLAYER.y += PLAYER.y_velocity;
@@ -104,10 +110,14 @@ function updateGameState() {
 	OBSTICILE_SPAWNER -= 1;
 
 	if (OBSTICILE_SPAWNER > 1) {
-		OBSTICILE_SPAWNER = (OBSTICILE_COOLDOWN_TIME + (Math.random() * 50)) //mabye add math.floor
+		OBSTICILE_SPAWNER = (OBSTICILE_COOLDOWN_TIME + (Math.floor(Math.random() * 50))) //mabye add math.floor
 	}
 
 	OBSTICILES.push(obs)
+
+	spawnObs()
+	DRAW_OBSTICLES()
+
 }
 
 
@@ -127,9 +137,9 @@ function DRAW_OBSTICLES() {
 
 	while (length--) {
 		var obs = OBSTICILES[length];
-		obs.x -= scrollSpeed;
+		obs.x -= SCROLL_SPEED;
 
-		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && player.y < obs.height + obs.y) {
+		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && PLAYER.y < obs.height + obs.y) {
 			SCORE++;
 			SCORE_TEXT.textContent = "Score: " + SCORE;
 			OBSTICILES.splice(length, 1);
