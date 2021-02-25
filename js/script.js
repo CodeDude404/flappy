@@ -90,6 +90,8 @@ function spawnObs() {
 	OBSTICILES.push(obs);
 	log(OBSTICILES)
 }
+
+
 function updateGameState() {
 	PLAYER.y += PLAYER.y_velocity;
 
@@ -149,7 +151,7 @@ function DRAW_OBSTICLES() {
 
 //event listener
 document.addEventListener("keydown", function (event) {
-	if (event.keyCode == 32) {
+	if (event.code == "space") {
 		console.log("Space key pressed.");
 
 		if (GameOVER) {
