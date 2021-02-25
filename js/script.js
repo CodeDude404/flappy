@@ -88,7 +88,7 @@ function spawnObs() {
 
 
 	OBSTICILES.push(obs);
-	log(OBSTICILES)
+	return OBSTICILES
 }
 function updateGameState() {
 	PLAYER.y += PLAYER.y_velocity;
@@ -113,9 +113,8 @@ function updateGameState() {
 		OBSTICILE_SPAWNER = (OBSTICILE_COOLDOWN_TIME + (Math.floor(Math.random() * 50))) //mabye add math.floor
 	}
 
-	OBSTICILES.push(obs)
 
-	spawnObs()
+	OBSTICILES = spawnObs()
 	DRAW_OBSTICLES()
 
 }
