@@ -14,8 +14,7 @@ var OBSTICILE_SPAWNER = OBSTICILE_COOLDOWN_TIME;
 
 //Game Functions
 //Initlaizer function
-function setUpNewGame()
-{
+function setUpNewGame() {
 	OBSTICILES = [];
 	SCROLL_SPEED = 2;
 	SCORE = 0;
@@ -29,39 +28,33 @@ function setUpNewGame()
 		y_velocity: 0 //Set the up and down speed to 0
 	}
 
-	;
+		;
 }
 
 //make a function to update the frame
-function frameUpdate()
-{
-	if (GameOVER === false)
-	{
+function frameUpdate() {
+	if (GameOVER === false) {
 		updateGameState();
 	}
 
-	else
-	{}
+	else { }
 
 	drawGame();
 }
 
 //make a function to draw the game
-function drawGame()
-{
+function drawGame() {
 	drawBackground();
 	drawPlayer();
 
 	//check if the game is over an if so display a gamover message
-	if (GameOVER)
-	{
+	if (GameOVER) {
 		CTX.font = "30px Arial";
 		CTX.fillText("Press space to begin", 50, 50);
 	}
 }
 
-function drawBackground()
-{
+function drawBackground() {
 	//sky
 	CTX.beginPath();
 	CTX.rect(0, 0, CANVAS.width, CANVAS.height);
@@ -74,65 +67,56 @@ function drawBackground()
 	CTX.fill();
 }
 
-function drawPlayer()
-{
+function drawPlayer() {
 	CTX.beginPath();
 	CTX.rect(PLAYER.x, PLAYER.y, PLAYER_SIZE, PLAYER_SIZE);
 	CTX.fillStyle = "orange";
 	CTX.fill();
 }
 
-function updateGameState()
-{
+function spawnObs() {
+	var obs = {
+		x: CANVAS.width,
+		y: Math.random() * GROUND_LEVEL,
+		height: Math.random() * 100 + PLAYER_SIZE
+	};
+
+	;
+	OBSTICILES.push(obs);
+}
+function updateGameState() {
 	PLAYER.y += PLAYER.y_velocity;
 
-	if (PLAYER.y >= GROUND_LEVEL - PLAYER_SIZE)
-	{
+	if (PLAYER.y >= GROUND_LEVEL - PLAYER_SIZE) {
 		PLAYER.y = GROUND_LEVEL - PLAYER_SIZE;
 		PLAYER.y_velocity = 0;
 	}
 
-	else if (PLAYER.y <= 0)
-	{
+	else if (PLAYER.y <= 0) {
 		PLAYER.y_velocity = 0.1;
 		PLAYER.y = 0;
 	}
 
-	else
-	{
+	else {
 		PLAYER.y_velocity += 0.1;
 	}
 
 	OBSTICILE_SPAWNER -= 1;
 
-	if (OBSTICILE_SPAWNER > 1)
-	{
+	if (OBSTICILE_SPAWNER > 1) {
 		OBSTICILE_SPAWNER = (OBSTICILE_COOLDOWN_TIME + (Math.random() * 50)) //mabye add math.floor
 	}
 
 	OBSTICILES.push(obs)
 }
 
-function spawnObs()
-{
-	var obs = {
-		x: CANVAS.width,
-		y: Math.random() * GROUND_LEVEL,
-		height: Math.random() * 100 + PLAYER_SIZE
-	}
 
-	;
-	OBSTICILES.push(obs);
-}
-
-function DRAW_OBSTICLES()
-{
+function DRAW_OBSTICLES() {
 	var length = OBSTICILES.length;
 
-	while (length--)
-	{
-		var obs = OBSTICILES[length] 
-		CTX.beginPath() 
+	while (length--) {
+		var obs = OBSTICILES[length]
+		CTX.beginPath()
 		CTX.rect(obs.x, obs.y, PLAYER_SIZE, obs.height);
 		CTX.fillStyle = "brown";
 		CTX.fill()
@@ -141,13 +125,11 @@ function DRAW_OBSTICLES()
 	//update obs postition and check for collision
 	var length = OBSTICILES.length;
 
-	while (length--)
-	{
+	while (length--) {
 		var obs = OBSTICILES[length];
 		obs.x -= scrollSpeed;
 
-		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && player.y < obs.height + obs.y)
-		{
+		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && player.y < obs.height + obs.y) {
 			SCORE++;
 			SCORE_TEXT.textContent = "Score: " + SCORE;
 			OBSTICILES.splice(length, 1);
@@ -156,29 +138,24 @@ function DRAW_OBSTICLES()
 }
 
 //event listener
-document.addEventListener("keydown", function (event)
-	{
-		if (event.keyCode == 32)
-		{
-			console.log("Space key pressed.");
+document.addEventListener("keydown", function (event) {
+	if (event.keyCode == 32) {
+		console.log("Space key pressed.");
 
-			if (GameOVER)
-			{
-				setUpNewGame();
-				GameOVER = false;
-			}
-
-			else
-			{
-				PLAYER.y_velocity = -4;
-			}
+		if (GameOVER) {
+			setUpNewGame();
+			GameOVER = false;
 		}
 
-		else
-		{
-			console.log("Space key not pressed.");
+		else {
+			PLAYER.y_velocity = -4;
 		}
 	}
+
+	else {
+		console.log("Space key not pressed.");
+	}
+}
 
 );
 //Run the game
