@@ -84,7 +84,6 @@ function spawnObs() {
 	;
 	OBSTICILES.push(obs);
 }
-
 function updateGameState() {
 	PLAYER.y += PLAYER.y_velocity;
 
@@ -107,11 +106,6 @@ function updateGameState() {
 	if (OBSTICILE_SPAWNER > 1) {
 		OBSTICILE_SPAWNER = (OBSTICILE_COOLDOWN_TIME + (Math.random() * 50)) //mabye add math.floor
 	}
-	var obs = {
-		x: CANVAS.width,
-		y: Math.random() * GROUND_LEVEL,
-		height: Math.random() * 100 + PLAYER_SIZE
-	};
 
 	OBSTICILES.push(obs)
 }
