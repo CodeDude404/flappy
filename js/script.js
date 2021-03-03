@@ -88,7 +88,6 @@ function spawnObs() {
 
 
 	OBSTICILES.push(obs);
-	log(OBSTICILES)
 }
 
 
