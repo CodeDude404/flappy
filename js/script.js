@@ -9,18 +9,18 @@ var SCORE_TEXT = document.getElementById("score");
 var CTX = CANVAS.getContext("2d");
 var GROUND_LEVEL = CANVAS.height - 50;
 var SCORE = 0;
-var OBSTICILES;
+var OBSTICLES;
 var SCROLL_SPEED;
 var PLAYER;
 var GameOVER;
-var OBSTICILE_COOLDOWN_TIME = 40;
-var OBSTICILE_SPAWNER = OBSTICILE_COOLDOWN_TIME;
+var OBSTICLE_COOLDOWN_TIME = 40;
+var OBSTICLE_SPAWNER = OBSTICLE_COOLDOWN_TIME;
 var obs = [];
 
 //Game Functions
 //Initlaizer function
 function setUpNewGame() {
-	OBSTICILES = [];
+	OBSTICLES = [];
 	SCROLL_SPEED = 2;
 	SCORE = 0;
 	SCORE_TEXT.textContent = "Score: " + SCORE;
@@ -51,7 +51,7 @@ function frameUpdate() {
 function drawGame() {
 	drawBackground();
 	drawPlayer();
-
+	DRAW_OBSTICLES()
 	//check if the game is over an if so display a gamover message
 	if (GameOVER) {
 		CTX.font = "30px Arial";
@@ -87,7 +87,7 @@ function spawnObs() {
 	};
 
 
-	OBSTICILES.push(obs);
+	OBSTICLES.push(obs);
 }
 
 
@@ -108,44 +108,45 @@ function updateGameState() {
 		PLAYER.y_velocity += 0.1;
 	}
 
-	OBSTICILE_SPAWNER -= 1;
+	OBSTICLE_SPAWNER -= 1;
 
-	if (OBSTICILE_SPAWNER > 1) {
-		OBSTICILE_SPAWNER = (OBSTICILE_COOLDOWN_TIME + (Math.floor(Math.random() * 50))) //mabye add math.floor
+	if (OBSTICLE_SPAWNER < 1) {
+		OBSTICLE_SPAWNER = (OBSTICLE_COOLDOWN_TIME + (Math.floor(Math.random() * 50))) //mabye add math.floor
+		spawnObs()
+	}
+	//update obs postition and check for collision
+	var length = OBSTICLES.length;
+
+	while (length--) {
+		var obs = OBSTICLES[length];
+		obs.x -= SCROLL_SPEED;
+
+		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && PLAYER.y < obs.height + obs.y) {
+			GameOVER = true
+		} 
+		
+		if (obs.x < 0) {
+			SCORE++;
+			SCORE_TEXT.textContent = "Score: " + SCORE;
+			OBSTICLES.splice(length, 1);
+		}
 	}
 
-	OBSTICILES.push(obs)
-
-	spawnObs()
-	DRAW_OBSTICLES()
 
 }
 
 
 function DRAW_OBSTICLES() {
-	var length = OBSTICILES.length;
+	var length = OBSTICLES.length;
 
 	while (length--) {
-		var obs = OBSTICILES[length]
+		var obs = OBSTICLES[length]
 		CTX.beginPath()
 		CTX.rect(obs.x, obs.y, PLAYER_SIZE, obs.height);
 		CTX.fillStyle = "brown";
 		CTX.fill()
 	}
 
-	//update obs postition and check for collision
-	var length = OBSTICILES.length;
-
-	while (length--) {
-		var obs = OBSTICILES[length];
-		obs.x -= SCROLL_SPEED;
-
-		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && PLAYER.y < obs.height + obs.y) {
-			SCORE++;
-			SCORE_TEXT.textContent = "Score: " + SCORE;
-			OBSTICILES.splice(length, 1);
-		}
-	}
 }
 
 //event listener
