@@ -1,5 +1,5 @@
 #myCanvas {
-  border-style: solid;
+  border-style: solid 0px;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
@@ -12,9 +12,32 @@ body {
   color: black;
   text-align: center;
   background-color: Ivory;
-  font-size: 20pt
+  font-size: 20pt;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  
 }
 
-.title {
-  color: red;
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
+
+
+.align-left {
+	text-align: left;
+}
+
+.main {
+	padding: 1px;
+}
+
+.hidden {
+	display: none;
+}
+
+.visible {}
