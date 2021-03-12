@@ -34,16 +34,17 @@ var obs = [];
 var high = 0;
 var not_paused_speed = 0
 var paused = false;
-var PLAYERcolor = "orange";
+var PLAYERcolor = "white";
 var immortal = false;
+var gold = 0;
 
 //Game Functions
 //Initlaizer function
 function setUpNewGame() {
 	OBSTICLES = [];
 	SCROLL_SPEED = 2;
-	SCORE = 0;
 	GameOVER = true;
+	
 	SCORE = 0; //make the score 0
 
 	PLAYER = {
@@ -86,6 +87,7 @@ function drawGame() {
 		CTX.font = "20px Arial";
 		CTX.fillText("Don't Touch the Obstacles v1.0", CANVAS.width - 280, 30)
 		CTX.fillText("Score: " + SCORE + " High: " + high + " Speed: " + Math.round((SCROLL_SPEED + Number.EPSILON) * 100) / 100, 10, 30)
+
 	}
 
 	else {
@@ -161,6 +163,9 @@ function updateGameState() {
 
 		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && PLAYER.y < obs.height + obs.y && paused == false && immortal == false) {
 			GameOVER = true
+			gold = Number(gold) + Number(Math.round(SCORE / 5))
+			document.getElementById("goldCounter").innerHTML = "<i class=\"fas fa-coins fa-2x\"></i> <b>" + gold + "</b>"
+
 		}
 
 		if (obs.x < 0) {
@@ -216,29 +221,133 @@ var yelocity = 0;
 var menu = document.getElementById("pauseMenu")
 var scoreTxt = document.getElementById("score")
 var highTXT = document.getElementById("high")
+var logs = document.getElementById("logs")
 
 var convert = new converter;
 
-
-function SaveCodes() {
-	var scoreBin = convert.toBinaryfromNum(SCORE);
-	var highBin = convert.toBinaryfromNum(high);
-
-	document.getElementById("save1").innerHTML = "Save code 1: " + scoreBin
-	document.getElementById("save2").innerHTML = "Save code 2: " + highBin
-}
-
-
-function LoadCodes() {
-
-	if (document.getElementById("code1").value === "immortal1234") {
-		immortal = true;
-		document.getElementById("code1").value === "immortal1234";
+function Save() {
+	if (typeof (Storage) !== "undefined") {
+		// Store
+		localStorage.setItem("score", SCORE);
+		localStorage.setItem("highscore", high)
+		localStorage.setItem("gold", gold)
+		// Retrieve
+		logs.innerHTML = ">> Save sucessful <br>" + logs.innerHTML
 	} else {
-		SCORE = convert.fromBinarytoNum(document.getElementById("code1").value)
-		high = convert.fromBinarytoNum(document.getElementById("code2").value)
+		logs.innerHTML = ">> Save unsupported <br>" + logs.innerHTML
 	}
 }
+
+
+function Load() {
+	if (typeof (Storage) !== "undefined") {
+		// Retrieve
+		SCORE = localStorage.getItem("score");
+		high = localStorage.getItem("highscore")
+		gold = localStorage.getItem("gold")
+
+		highTXT.innerHTML = "High-score: " + high;
+		scoreTxt.innerHTML = "Score: " + SCORE;
+
+		if (localStorage.getItem("RedCube") === "owned") {
+			document.getElementById("redCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipRed()\">Equip</button>"
+		}
+
+		if (localStorage.getItem("OrangeCube") === "owned") {
+			document.getElementById("orangeCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipOrange()\">Equip</button>"
+		}
+
+		if (localStorage.getItem("YellowCube") === "owned") {
+			document.getElementById("yellowCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipYellow()\">Equip</button>"
+		}
+			
+
+		logs.innerHTML = ">> Load sucessful <br>" + logs.innerHTML
+	} else {
+		logs.innerHTML = ">> Load unsupported <br>" + logs.innerHTML
+	}
+}
+
+
+function RESET() {
+	var con = confirm("Reset your game progress (this cannot be undone)")
+
+	if (con === true) {
+		localStorage.clear();
+		console.log("cleared")
+	}
+}
+
+
+function buyRedCube() {
+	if (gold >= 20) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 20
+			// Store
+			localStorage.setItem("RedCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Red Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("redCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipRed()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insuffecent recources <br>" + logs.innerHTML
+	}
+}
+
+function buyOrangeCube() {
+	if (gold >= 30) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 30
+			// Store
+			localStorage.setItem("OrangeCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Orange Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("orangeCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipOrange()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insuffecent recources <br>" + logs.innerHTML
+	}
+}
+
+
+function buyYellowCube() {
+	if (gold >= 40) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 40
+			// Store
+			localStorage.setItem("YellowCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Yellow Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("yellowCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipYellow()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insuffecent recources <br>" + logs.innerHTML
+	}
+}
+
+function equipWhite() {
+	PLAYERcolor = "white"
+	logs.innerHTML = ">> Equipped White Cube <br>" + logs.innerHTML
+}
+
+function equipRed() {
+	PLAYERcolor = "red"
+	logs.innerHTML = ">> Equipped Red Cube <br>" + logs.innerHTML
+}
+
+function equipOrange(){
+	PLAYERcolor = "orange"
+	logs.innerHTML = ">> Equipped Orange Cube <br>" + logs.innerHTML
+}
+
+function equipYellow(){
+	PLAYERcolor = "yellow"
+	logs.innerHTML = ">> Equipped Yellow Cube <br>" + logs.innerHTML
+}
+
 
 function PausePlay() {
 
@@ -268,16 +377,6 @@ function PausePlay() {
 		CANVAS.style.display = ""
 		menu.className = "container hidden"
 
-
-		var x = document.getElementById("colorPlayer").value;
-
-		if (x === "orange") {
-			PLAYERcolor = "orange"
-		} else if (x === "red") {
-			PLAYERcolor = "red"
-		} else if (x === "black") {
-			PLAYERcolor = "black"
-		}
 
 
 	}
