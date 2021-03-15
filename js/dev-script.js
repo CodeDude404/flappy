@@ -1,42 +1,72 @@
-class converter {
-	toBinaryfromNum(number) {
-		number = parseInt(number)
+class NotInColors extends Error {
+  constructor(message) {
+    super(message); // (1)
+    this.name = "NotInColors"; // (2)
+  }
+}
 
-		// convert to binary
-		return number.toString(2)
+class mainGame() {
+	//Initlaizer
+	var CANVAS = document.getElementById("myCanvas");
+	CANVAS.width = window.innerWidth;
+	CANVAS.height = window.innerHeight - 50;
+	var CTX = CANVAS.getContext("2d");
+	var GROUND_LEVEL = CANVAS.height - 50;
+	var SCORE = 0;
+	var OBSTICLES;
+	var SCROLL_SPEED;
+	var PLAYER;
+	var GameOVER;
+	var OBSTICLE_COOLDOWN_TIME = 40;
+	var OBSTICLE_SPAWNER = OBSTICLE_COOLDOWN_TIME;
+	var obs = [];
+	var high = 0;
+	var not_paused_speed = 0
+	var paused = false;
+	var PLAYERcolor = "white";
+	var immortal = false;
+	var gold = 0;
+	var cheatCodes = [
+		//format: name, code
+		['unicorn', '6075']
+	];
 
+
+
+}
+
+
+class user {
+	var PLAYER_SIZE = 20;
+
+	var playerData = [
+		["size", 20],
+		["color", "white"]
+	]
+	var colors = ['white','red','orange','yellow']
+
+	getSize() {
+		return self.playerData[0][1]
+	}
+	getColor() {
+		return self.playerData[1][1]
 	}
 
-	fromBinarytoNum(bin) {
-		return parseInt(bin, 2)
+	setSize(size) {
+		self.playerData[0][1] = size
+	}
+	setColor(color) {
+
+		if (color in colors) {
+			
+		} else {
+			throw new NotInColors("Whoops!");
+		}
+		return self.playerData[1][1]
 	}
 }
 
-//Initalize
-var PLAYER_SIZE = 20;
-var CANVAS = document.getElementById("myCanvas");
 
-CANVAS.width = window.innerWidth;
-CANVAS.height = window.innerHeight - 50;
-
-
-var CTX = CANVAS.getContext("2d");
-var GROUND_LEVEL = CANVAS.height - 50;
-var SCORE = 0;
-var OBSTICLES;
-var SCROLL_SPEED;
-var PLAYER;
-var GameOVER;
-var OBSTICLE_COOLDOWN_TIME = 40;
-var OBSTICLE_SPAWNER = OBSTICLE_COOLDOWN_TIME;
-var obs = [];
-
-var high = 0;
-var not_paused_speed = 0
-var paused = false;
-var PLAYERcolor = "white";
-var immortal = false;
-var gold = 0;
 
 //Game Functions
 //Initlaizer function
@@ -134,7 +164,6 @@ function spawnObs() {
 function updateGameState() {
 	PLAYER.y += PLAYER.y_velocity;
 
-
 	if (PLAYER.y >= GROUND_LEVEL - PLAYER_SIZE) {
 		PLAYER.y = GROUND_LEVEL - PLAYER_SIZE;
 		PLAYER.y_velocity = 0;
@@ -164,7 +193,6 @@ function updateGameState() {
 
 		if (Math.abs(obs.x - PLAYER.x) < PLAYER_SIZE && PLAYER.y + PLAYER_SIZE > obs.y && PLAYER.y < obs.height + obs.y && paused == false && immortal == false) {
 			GameOVER = true
-			Save()
 			gold = Number(gold) + Number(Math.round(SCORE / 5))
 			document.getElementById("goldCounter").innerHTML = "<i class=\"fas fa-coins fa-2x\"></i> <b>" + gold + "</b>"
 
@@ -246,7 +274,7 @@ function Load() {
 		// Retrieve
 		SCORE = localStorage.getItem("score");
 		high = localStorage.getItem("highscore")
-		gold = Number(localStorage.getItem("gold"))
+		gold = localStorage.getItem("gold")
 
 		highTXT.innerHTML = "High-score: " + high;
 		scoreTxt.innerHTML = "Score: " + SCORE;
@@ -415,10 +443,6 @@ el.addEventListener('click', clickHandler)
 
 //Run the game
 //start a new game
-Load()
-document.getElementById("goldCounter").innerHTML = "<i class=\"fas fa-coins fa-2x\"></i> <b>" + gold + "</b>"
-
 setUpNewGame();
-
 //set the interval to update the frame
 setInterval(frameUpdate, 10);
