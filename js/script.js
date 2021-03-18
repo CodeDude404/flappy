@@ -358,6 +358,22 @@ function buyYellowCube() {
 	}
 }
 
+function buyGreenCube() {
+	if (gold >= 50) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 50
+			// Store
+			localStorage.setItem("GreenCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Green Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("greenCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipGreen()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
+	}
+}
+
 function equipWhite() {
 	PLAYERcolor = "white"
 	logs.innerHTML = ">> Equipped White Cube <br>" + logs.innerHTML
@@ -378,6 +394,10 @@ function equipYellow(){
 	logs.innerHTML = ">> Equipped Yellow Cube <br>" + logs.innerHTML
 }
 
+function equipGreen(){
+	PLAYERcolor = "green"
+	logs.innerHTML = ">> Equipped Green Cube <br>" + logs.innerHTML
+}
 
 function PausePlay() {
 
