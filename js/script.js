@@ -186,7 +186,7 @@ function updateGameState() {
 		if (obs.x < 0) {
 			SCORE++;
 			OBSTICLES.splice(length, 1);
-			SCROLL_SPEED += 0.001
+			SCROLL_SPEED += 0.01
 		}
 	}
 
