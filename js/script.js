@@ -37,6 +37,7 @@ var paused = false;
 var PLAYERcolor = "white";
 var immortal = false;
 var gold = 0;
+var unicornEnabled = false;
 
 //Game Functions
 //Initlaizer function
@@ -113,10 +114,24 @@ function drawBackground() {
 }
 
 function drawPlayer() {
-	CTX.beginPath();
-	CTX.rect(PLAYER.x, PLAYER.y, PLAYER_SIZE, PLAYER_SIZE);
-	CTX.fillStyle = PLAYERcolor;
-	CTX.fill();
+
+	if (unicornEnabled === false) {
+		CTX.beginPath();
+		CTX.rect(PLAYER.x, PLAYER.y, PLAYER_SIZE, PLAYER_SIZE);
+		CTX.fillStyle = PLAYERcolor;
+		CTX.fill();
+	} else if (unicornEnabled === true) {
+		var grd = CTX.createLinearGradient(0, 0, 20, 0);
+		grd.addColorStop(0, "red");
+		grd.addColorStop(0.01, "orange");
+		grd.addColorStop(0.02, "yellow");
+		grd.addColorStop(0.03, "green");
+		grd.addColorStop(0.04, "blue");
+		grd.addColorStop(0.05, "purple");
+		grd.addColorStop(0.06, "pink");
+		CTX.fillStyle = grd;
+		CTX.fillRect(PLAYER.x, PLAYER.y, PLAYER_SIZE, PLAYER_SIZE);
+	}
 }
 
 function spawnObs() {
@@ -173,10 +188,23 @@ function updateGameState() {
 		if (obs.x < 0) {
 			SCORE++;
 			OBSTICLES.splice(length, 1);
+			SCROLL_SPEED += 0.01
 		}
 	}
 
 
+}
+
+function ActivateCode() {
+	var codeInput = document.getElementById("code").value;
+
+	if (codeInput === "2*dJG5^dAR") {
+		immortal = true
+		logs.innerHTML = ">> Used a code to make player immortal!" + logs.innerHTML
+	} else if (codeInput === "!qgHVG64z%") {
+		PLAYERcolor = "#ff2e69";
+		logs.innerHTML = ">> Used a code to make player color #ff2e69." + logs.innerHTML
+	}
 }
 
 
@@ -293,7 +321,7 @@ function buyRedCube() {
 
 		document.getElementById("redCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipRed()\">Equip</button>"
 	} else {
-		logs.innerHTML = ">> Insuffecent recources <br>" + logs.innerHTML
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
 	}
 }
 
@@ -309,7 +337,7 @@ function buyOrangeCube() {
 
 		document.getElementById("orangeCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipOrange()\">Equip</button>"
 	} else {
-		logs.innerHTML = ">> Insuffecent recources <br>" + logs.innerHTML
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
 	}
 }
 
@@ -326,7 +354,7 @@ function buyYellowCube() {
 
 		document.getElementById("yellowCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipYellow()\">Equip</button>"
 	} else {
-		logs.innerHTML = ">> Insuffecent recources <br>" + logs.innerHTML
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
 	}
 }
 
