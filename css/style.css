@@ -31,6 +31,9 @@ body {
 .align-left {
 	text-align: left;
 }
+.align-right {
+	text-align: right;
+}
 
 .main {
 	padding: 1px;
