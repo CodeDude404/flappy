@@ -290,6 +290,10 @@ function Load() {
 		if (localStorage.getItem("YellowCube") === "owned") {
 			document.getElementById("yellowCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipYellow()\">Equip</button>"
 		}
+
+		if (localStorage.getItem("GreenCube") === "owned") {
+			document.getElementById("greenCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipgREEN()\">Equip</button>"
+		}
 			
 
 		logs.innerHTML = ">> Load sucessful <br>" + logs.innerHTML
