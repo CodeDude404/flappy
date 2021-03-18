@@ -292,7 +292,7 @@ function Load() {
 		}
 
 		if (localStorage.getItem("GreenCube") === "owned") {
-			document.getElementById("greenCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipgREEN()\">Equip</button>"
+			document.getElementById("greenCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipGreen()\">Equip</button>"
 		}
 			
 
