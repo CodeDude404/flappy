@@ -1,119 +1,130 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>Don't Touch the Obstacles</title>
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-			crossorigin="anonymous">
-		<script defer src="fontAwesome/all.js"></script>
-	</head>
-	<body class="unselectable">
-		<canvas id="myCanvas" width="800" height="200" style="visible">
-		</canvas>
-		<div class="main">
-			<div class="align-left">
-				<div class="btn-group" role="group" aria-label="Basic example">
-					<button class="btn btn-primary" type="button" onclick="js:PausePlay()"><i class="fas fa-pause-circle fa-2x"></i></button>
-					<button type="button" class="btn btn-danger" onclick="js:game()"><i class="fas fa-step-backward fa-2x"></i></button>
-					<button type="button" class="btn btn-success" id="goldCounter"><i class="fas fa-coins fa-2x"></i> <b>0</b></button>
 
-					<button class="btn btn-primary align-right" type="button" onclick="js:ScreenToggle()"><i class="fas fa-expand fa-2x"></i></button>
-				</div>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Don't Touch the Obstacles</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	<link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+	<link rel="manifest" href="fav/site.webmanifest">
+	<link rel="shortcut icon" href="fav/favicon.ico">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-config" content="fav/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	<script defer src="fontAwesome/all.js"></script>
+</head>
+
+<body class="unselectable">
+	<canvas id="myCanvas" width="800" height="200" style="visible">
+	</canvas>
+	<div class="main">
+		<div class="align-left">
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button class="btn btn-primary" type="button" onclick="js:PausePlay()"><i
+						class="fas fa-pause-circle fa-2x"></i></button>
+				<button type="button" class="btn btn-danger" onclick="js:game()"><i
+						class="fas fa-step-backward fa-2x"></i></button>
+				<button type="button" class="btn btn-success" id="goldCounter"><i class="fas fa-coins fa-2x"></i>
+					<b>0</b></button>
 			</div>
 		</div>
-		<div class="container hidden" id="pauseMenu">
-			<div class="accordion accordion-flush align-left" id="accordionFlushExample">
-				<div class="accordion-item">
-					<h2 class="accordion-header" id="flush-headingOne">
-						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+	</div>
+	<div class="container hidden" id="pauseMenu">
+		<div class="accordion accordion-flush align-left" id="accordionFlushExample">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="flush-headingOne">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+						data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
 						Game
-						</button>
-					</h2>
-					<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-						<div class="accordion-body">
-							<div id="score"> </div>
-							<div id="high"> </div>
-							</br>
-			
-							<div class="d-grid gap-2">
-  								<button class="btn btn-primary" type="button" onclick="js:Save()">Save Data</button>
-								<button class="btn btn-primary" type="button" onclick="js:Load()">Load Data</button>
-							</div>
+					</button>
+				</h2>
+				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+					data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body">
+						<div id="score"> </div>
+						<div id="high"> </div>
+						</br>
 
-							<br>
-							<code id="logs">
+						<div class="d-grid gap-2">
+							<button class="btn btn-primary" type="button" onclick="js:Save()">Save Data</button>
+							<button class="btn btn-primary" type="button" onclick="js:Load()">Load Data</button>
+						</div>
+
+						<br>
+						<code id="logs">
 
 							</code>
 
 
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">
-									White Cube <button type="button" class="btn btn-success" onclick="js:equipWhite()">Equip</button>
-								</li>
-								<li class="list-group-item">
-									Red Cube 
-									<span id="redCube">
-										<button type="button" class="btn btn-warning" onclick="js:buyRedCube()">Buy (20 gold)</button>
-									</span>
-								</li>
-								<li class="list-group-item">
-									Orange Cube 
-									<span id="orangeCube">
-										<button type="button" class="btn btn-warning" onclick="js:buyOrangeCube()">Buy (30 gold)</button>
-									</span>
-								</li>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								White Cube <button type="button" class="btn btn-success"
+									onclick="js:equipWhite()">Equip</button>
+							</li>
+							<li class="list-group-item">
+								Red Cube
+								<span id="redCube">
+									<button type="button" class="btn btn-warning" onclick="js:buyRedCube()">Buy (20
+										gold)</button>
+								</span>
+							</li>
+							<li class="list-group-item">
+								Orange Cube
+								<span id="orangeCube">
+									<button type="button" class="btn btn-warning" onclick="js:buyOrangeCube()">Buy (30
+										gold)</button>
+								</span>
+							</li>
 
-								<li class="list-group-item">
-									Yellow Cube 
-									<span id="yellowCube">
-										<button type="button" class="btn btn-warning" onclick="js:buyYellowCube()">Buy (40 gold)</button>
-									</span>
-								</li>
-							</ul>
+							<li class="list-group-item">
+								Yellow Cube
+								<span id="yellowCube">
+									<button type="button" class="btn btn-warning" onclick="js:buyYellowCube()">Buy (40
+										gold)</button>
+								</span>
+							</li>
+						</ul>
 
 
-							</br>
-							<div class="mb-3 row">
-							  <div class="mb-3 row">
-							    <label for="inputPassword" class="col-sm-2 col-form-label">Code</label>
-							    <div class="input-group mb-3">
-								  	<input type="password" id="code" class="form-control" placeholder="" aria-label="Code" aria-describedby="button-addon1">
-								    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="js:ActivateCode()">Activate</button>
-							    </div>
-							</div>
+						</br>
 
-							<br>
+						<div class="d-grid gap-2">
+							<button class="btn btn-danger" type="button" onclick="js:RESET()">Reset Progress</button>
 
-							<div class="d-grid gap-2">
-								<button class="btn btn-danger" type="button" onclick="js:RESET()">Reset Progress</button>
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="accordion-item">
-					<h2 class="accordion-header" id="flush-headingTwo">
-						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-						Info
-						</button>
-					</h2>
-					<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-						<div class="accordion-body">
-							<p>
-								Version: 1.0 <br/>
-								Icons: Font Awesome <br/>
-								CSS Library: Bootstrap v5.0.0-beta2
-							</p>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="flush-headingTwo">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+						data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+						Info
+					</button>
+				</h2>
+				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+					data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body">
+						<p>
+							Version: 1.0 <br />
+							Icons: Font Awesome <br />
+							CSS Library: Bootstrap v5.0.0-beta2
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
-		<script src="js/script.js"></script>
-		<script src="js/screenToggle.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-	</body>
+	</div>
+	<script src="js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+		crossorigin="anonymous"></script>
+</body>
+
 </html>
