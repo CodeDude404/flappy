@@ -195,7 +195,7 @@ function updateGameState() {
 		if (obs.x < 0) {
 			SCORE++;
 			OBSTICLES.splice(length, 1);
-			SCROLL_SPEED += 1
+			SCROLL_SPEED += 0.01
 		}
 	}
 
@@ -301,6 +301,10 @@ function Load() {
 		if (localStorage.getItem("GreenCube") === "owned") {
 			document.getElementById("greenCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipGreen()\">Equip</button>"
 		}
+
+		if (localStorage.getItem("BlueCube") === "owned") {
+			document.getElementById("blueCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipBlue()\">Equip</button>"
+		}
 			
 
 		logs.innerHTML = ">> Load sucessful <br>" + logs.innerHTML
@@ -385,6 +389,22 @@ function buyGreenCube() {
 	}
 }
 
+function buyBlueCube() {
+	if (gold >= 60) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 60
+			// Store
+			localStorage.setItem("BlueCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Blue Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("blueCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipBlue()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
+	}
+}
+
 function equipWhite() {
 	PLAYERcolor = "white"
 	logs.innerHTML = ">> Equipped White Cube <br>" + logs.innerHTML
@@ -408,6 +428,11 @@ function equipYellow(){
 function equipGreen(){
 	PLAYERcolor = "green"
 	logs.innerHTML = ">> Equipped Green Cube <br>" + logs.innerHTML
+}
+
+function equipBlue(){
+	PLAYERcolor = "blue"
+	logs.innerHTML = ">> Equipped Blue Cube <br>" + logs.innerHTML
 }
 
 function PausePlay() {
