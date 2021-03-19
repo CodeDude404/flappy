@@ -66,6 +66,9 @@ function frameUpdate() {
 	else { }
 
 	drawGame();
+	if (immortal === true) {
+		gold = 0
+	}
 }
 
 //make a function to draw the game
@@ -94,9 +97,13 @@ function drawGame() {
 	else {
 		CTX.font = "20px Arial";
 		CTX.fillStyle = "orange"
-		CTX.fillText("Score: " + SCORE + " High: " + high + " Speed: " + Math.round((SCROLL_SPEED + Number.EPSILON) * 100) / 100, 10, 30)
-
-		CTX.fillText("Don't Touch the Obstacles v1.0", CANVAS.width - 280, 30)
+		if (immortal === true) {
+			CTX.fillText("IMMORTAL CHEAT")
+			CTX.fillText("Don't Touch the Obstacles v1.0", CANVAS.width - 280, 30)
+		} else {
+			CTX.fillText("Score: " + SCORE + " High: " + high + " Speed: " + Math.round((SCROLL_SPEED + Number.EPSILON) * 100) / 100, 10, 30)
+			CTX.fillText("Don't Touch the Obstacles v1.0", CANVAS.width - 280, 30)
+		}
 	}
 }
 
@@ -188,7 +195,7 @@ function updateGameState() {
 		if (obs.x < 0) {
 			SCORE++;
 			OBSTICLES.splice(length, 1);
-			SCROLL_SPEED += 0.01
+			SCROLL_SPEED += 1
 		}
 	}
 
