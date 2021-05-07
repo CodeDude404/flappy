@@ -148,8 +148,18 @@ function spawnObs() {
 		height: Math.random() * 100 + PLAYER_SIZE
 	};
 
+	if (obs.x in OBSTICLES) {
+		spawnObs()
+		return
+	} if (obs.y in OBSTICLES) {
+		spawnObs()
+		return
+	} else {
+		OBSTICLES.push(obs);
+	}
 
-	OBSTICLES.push(obs);
+
+	
 }
 
 
@@ -305,8 +315,12 @@ function Load() {
 		if (localStorage.getItem("BlueCube") === "owned") {
 			document.getElementById("blueCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipBlue()\">Equip</button>"
 		}
-			
-
+		if (localStorage.getItem("PurpleCube") === "owned") {
+			document.getElementById("purpleCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipPurple()\">Equip</button>"
+		}			
+		if (localStorage.getItem("BlackCube") === "owned") {
+			document.getElementById("blackCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipBlack()\">Equip</button>"
+		}	
 		logs.innerHTML = ">> Load sucessful <br>" + logs.innerHTML
 	} else {
 		logs.innerHTML = ">> Load unsupported <br>" + logs.innerHTML
@@ -405,6 +419,38 @@ function buyBlueCube() {
 	}
 }
 
+function buyPurpleCube() {
+	if (gold >= 70) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 70
+			// Store
+			localStorage.setItem("PurpleCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Purple Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("purpleCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipPurple()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
+	}
+}
+
+function buyBlackCube() {
+	if (gold >= 80000000) {
+		if (typeof (Storage) !== "undefined") {
+			gold -= 80000000
+			// Store
+			localStorage.setItem("BlackCube", "owned");
+			// Retrieve
+			logs.innerHTML = ">> Bought Black Cube <br>" + logs.innerHTML
+		}
+
+		document.getElementById("blackCube").innerHTML = "<button type=\"button\" class=\"btn btn-success\" onclick=\"js:equipBlack()\">Equip</button>"
+	} else {
+		logs.innerHTML = ">> Insufficient recources <br>" + logs.innerHTML
+	}
+}
+
 function equipWhite() {
 	PLAYERcolor = "white"
 	logs.innerHTML = ">> Equipped White Cube <br>" + logs.innerHTML
@@ -433,6 +479,16 @@ function equipGreen(){
 function equipBlue(){
 	PLAYERcolor = "blue"
 	logs.innerHTML = ">> Equipped Blue Cube <br>" + logs.innerHTML
+}
+
+function equipPurple(){
+	PLAYERcolor = "purple"
+	logs.innerHTML = ">> Equipped Purple Cube <br>" + logs.innerHTML
+}
+
+function equipBlack(){
+	PLAYERcolor = "black"
+	logs.innerHTML = ">> Equipped Black Cube <br>" + logs.innerHTML
 }
 
 function PausePlay() {

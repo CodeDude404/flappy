@@ -31,39 +31,25 @@ class mainGame() {
 		['unicorn', '6075']
 	];
 
+	checkCode(input) {
+		var i = 0;
+
+		while (i < length(this.cheatCodes)) {
+			if (this.cheatCodes[i][1] === input) {
+				return this.cheatCodes[i][0];
+				i = 99999999999999999999
+			}
+		}
+	}
 
 
 }
 
 
 class user {
-	var PLAYER_SIZE = 20;
+	var size = 20;
 
-	var playerData = [
-		["size", 20],
-		["color", "white"]
-	]
-	var colors = ['white','red','orange','yellow']
-
-	getSize() {
-		return self.playerData[0][1]
-	}
-	getColor() {
-		return self.playerData[1][1]
-	}
-
-	setSize(size) {
-		self.playerData[0][1] = size
-	}
-	setColor(color) {
-
-		if (color in colors) {
-			
-		} else {
-			throw new NotInColors("Whoops!");
-		}
-		return self.playerData[1][1]
-	}
+	
 }
 
 
